@@ -1,4 +1,8 @@
-const { map, filter } = require('../lib/index');
+const {
+  map,
+  filter,
+  reduce
+} = require('../lib/index');
 
 describe('array methods', () => {
   describe('assumptions', () => {
@@ -45,6 +49,24 @@ describe('array methods', () => {
         });
 
         expect(evens).toEqual([2, 4]);
+      });
+    });
+
+    describe('reduce', () => {
+      it('can sum an array of numbers together', () => {
+        const sum = reduce([1, 2, 3], (acc, ele) => {
+          return acc + ele;
+        }, 0);
+
+        expect(sum).toEqual(6);
+      });
+
+      it('can sum an array with no accumulator', () => {
+        const sum = reduce([1, 2, 3], (acc, ele) => {
+          return acc + ele;
+        });
+
+        expect(sum).toEqual(6);
       });
     });
   });
