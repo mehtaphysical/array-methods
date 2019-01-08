@@ -1,7 +1,8 @@
 const {
   map,
   filter,
-  reduce
+  reduce,
+  forEach
 } = require('../lib/index');
 
 describe('array methods', () => {
@@ -16,7 +17,12 @@ describe('array methods', () => {
       });
     });
 
-    describe('filter', () => { });
+    describe('filter', () => {
+      it('filters with holes', () => {
+        const filtered = [1, 2, , 3].filter(ele => ele === 2);
+        expect(filtered).toEqual([2]);
+      });
+    });
 
     describe('findIndex', () => { });
 
@@ -50,6 +56,11 @@ describe('array methods', () => {
 
         expect(evens).toEqual([2, 4]);
       });
+
+      it('can filter with holes', () => {
+        const filtered = filter([1, 2, , 3], ele => ele === 2);
+        expect(filtered).toEqual([2]);
+      });
     });
 
     describe('reduce', () => {
@@ -67,6 +78,27 @@ describe('array methods', () => {
         });
 
         expect(sum).toEqual(6);
+      });
+
+      it('can sum with holes', () => {
+        const sum = reduce([1, 2, , 3], (acc, ele) => acc + ele);
+        expect(sum).toEqual(6);
+      });
+
+      it('can sum when the first value is a hole', () => {
+        const sum = reduce([, , 1, 2, 3], (acc, ele) => acc + ele);
+        expect(sum).toEqual(6);
+      });
+    });
+
+    describe('forEach', () => {
+      it('squared', () => {
+        let results = [];
+        forEach([1, 2, 3, 4], ele => {
+          results.push(ele * ele);
+        });
+
+        expect(results).toEqual([1, 4, 9, 16]);
       });
     });
   });
